@@ -3,11 +3,11 @@ version: "3.9"
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8705
     volumes:
       - .:/code
     ports:
-      - 8000:8000
+      - 8705:8705
     depends_on:
       - db
 
