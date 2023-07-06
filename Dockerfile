@@ -1,4 +1,4 @@
-FROM python:3.9.16-alpine3.17
+FROM python:3.9-alpine
 
 # setting environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -11,9 +11,9 @@ WORKDIR /code
 COPY requirements.txt /code/
 
 # install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
 RUN apk add --no-cache musl-dev g++ libstdc++
-RUN pip install --no-cache-dir pandas
+RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install pandas
 
 # copy all files
 COPY . /code/
