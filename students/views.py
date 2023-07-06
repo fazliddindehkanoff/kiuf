@@ -1,55 +1,66 @@
 from io import BytesIO
 
-import pandas as pd
-
 from django.db import transaction
 from django.http import FileResponse
 from django.shortcuts import render
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import Student
 from .utils import generate_pdf, generate_qr_code_titles
+from openpyxl import load_workbook
 
 
 @login_required(login_url="login")
 def home_view(request):
     if request.method == "POST" and request.FILES:
         file = request.FILES['file']
-        try:
-            student_ids: list[int] = []
-            sheets = pd.read_excel(file, sheet_name=None)
 
-            with transaction.atomic():
-                for sheet_name, df in sheets.items():
-                    for _, row in df.iterrows():
-                        student = Student(
-                            first_name=row['Familiya'],
-                            last_name=row['Ismi'],
-                            middle_name=row['Otasining ismi'],
-                            passport_number=row['Pasport Raqami'],
-                            birth_date=row['Tug\'ilgan sanasi'],
-                            otm=row['OTM'],
-                            speciality=row['Mutaxassislik'],
-                            study_type=row['Ta\'lim turi'],
-                            edu_type=row['Ta\'lim shakli'],
-                            document_number=row['Diplom raqami'],
-                            registered_date=row['Qayd sanasi']
-                        )
-                        student.save()
-                        student_ids.append(student.id)
+        student_ids = []
 
-            qr_code_titles = generate_qr_code_titles(ids=student_ids)
-            pdf_bytes = generate_pdf(qr_code_titles)
+        wb = load_workbook(file, read_only=True)
+        sheet_names = wb.sheetnames
 
-            response = FileResponse(BytesIO(pdf_bytes))
-            response['Content-Type'] = 'application/pdf'
-            response['Content-Disposition'] = 'attachment; filename="results.pdf"'
+        with transaction.atomic():
+            for sheet_name in sheet_names:
+                ws = wb[sheet_name]
 
-            return response
+                for row in ws.iter_rows(min_row=2, values_only=True):
+                    first_name = row[1] or "-"
+                    last_name = row[0] or "-"
+                    middle_name = row[2] or "-"
+                    passport_number = row[3] or "-"
+                    birth_date = row[4] or "-"
+                    otm = row[5] or "-"
+                    speciality = row[6] or "-"
+                    study_type = row[7] or "-"
+                    edu_type = row[8] or "-"
+                    document_number = row[9] or "-"
+                    registered_date = row[10] or "-"
 
-        except Exception as e:
-            messages.error(request, f"Error reading Excel file: {str(e)}")
+                    student = Student(
+                        first_name=first_name,
+                        last_name=last_name,
+                        middle_name=middle_name,
+                        passport_number=passport_number,
+                        birth_date=birth_date,
+                        otm=otm,
+                        speciality=speciality,
+                        study_type=study_type,
+                        edu_type=edu_type,
+                        document_number=document_number,
+                        registered_date=registered_date
+                    )
+                    student.save()
+                    student_ids.append(student.id)
+
+        qr_code_titles = generate_qr_code_titles(ids=student_ids)
+        pdf_bytes = generate_pdf(qr_code_titles)
+
+        response = FileResponse(BytesIO(pdf_bytes))
+        response['Content-Type'] = 'application/pdf'
+        response['Content-Disposition'] = 'attachment; filename="results.pdf"'
+
+        return response
 
     return render(request, "home.html")
 
