@@ -102,4 +102,4 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-BASE_URL = 'http://localhost:8000'
+BASE_URL = 'http://diplom.kiuf.uz'
