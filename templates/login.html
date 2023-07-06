@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %} 
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
+{% endblock style %} 
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-sm-12 text-center mt-5">
+      <div class="login-container">
+        <form
+          action="{% url 'login' %}"
+          method="post"
+          class="form-control border-primary login-form"
+        >
+          {% csrf_token %}
+          <img
+            src="{% static 'images/logo.jpg' %}"
+            alt="logo"
+            class="img-fluid logo mt-5 mb-4"
+          />
+          <br />
+          <img
+            src="{% static 'images/korean-txt.png' %}"
+            alt="korean-txt"
+            class="img-fluid mb-3"
+          />
+          <h4 class="title text-primary">Account Information System</h4>
+          <input
+            type="text"
+            class="form-control mt-5 p-2 input-element"
+            placeholder="Your ID"
+            name="login"
+          />
+          <input
+            type="password"
+            class="form-control mt-3 mb-5 p-2 input-element"
+            placeholder="Password"
+            name="password"
+          />
+          <button class="btn btn-primary mt-5 login-btn">Login</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-0 d-none d-lg-block right"></div>
+  </div>
+</div>
+{% endblock content %}
