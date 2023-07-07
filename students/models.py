@@ -13,3 +13,6 @@ class Student(models.Model):
     edu_type = models.CharField(max_length=100, verbose_name="Ta'lim shakli")
     document_number = models.CharField(max_length=100, verbose_name="Diplom raqami")
     registered_date = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return "{}{}".format(self.first_name, self.last_name)
