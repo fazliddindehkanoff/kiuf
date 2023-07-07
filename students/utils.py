@@ -25,7 +25,7 @@ def generate_pdf(qr_code_titles, qr_codes_per_row=6, qr_code_width=70, qr_code_h
     for page in range(int(total_pages)):
         # Create a new PDF object for each page
         # Set the font and font size
-        pdf.setFont("Helvetica", 8)
+        pdf.setFont("Helvetica", 5)
 
         # Set the initial position for drawing on the page
         x = 50
