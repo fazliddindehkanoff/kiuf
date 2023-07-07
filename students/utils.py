@@ -9,7 +9,7 @@ from reportlab.pdfgen import canvas
 from .models import Student
 
 
-def generate_pdf(qr_code_titles, qr_codes_per_row=4, qr_code_width=100, qr_code_height=100, space=20):
+def generate_pdf(qr_code_titles, qr_codes_per_row=6, qr_code_width=70, qr_code_height=70, space=10):
     buffer = BytesIO()
 
     # Calculate the maximum number of QR codes per page based on qr_codes_per_row
@@ -25,7 +25,7 @@ def generate_pdf(qr_code_titles, qr_codes_per_row=4, qr_code_width=100, qr_code_
     for page in range(int(total_pages)):
         # Create a new PDF object for each page
         # Set the font and font size
-        pdf.setFont("Helvetica", 12)
+        pdf.setFont("Helvetica", 8)
 
         # Set the initial position for drawing on the page
         x = 50
@@ -42,7 +42,7 @@ def generate_pdf(qr_code_titles, qr_codes_per_row=4, qr_code_width=100, qr_code_
             qr_code_y = y - (i // qr_codes_per_row) * (qr_code_height + space)
 
             title_x = qr_code_x + qr_code_width/2
-            title_y = qr_code_y + qr_code_height - space*5
+            title_y = qr_code_y + qr_code_height - space*7
 
             # Generate the QR code image
             qr = qrcode.make(url)

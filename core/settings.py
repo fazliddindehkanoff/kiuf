@@ -103,3 +103,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 BASE_URL = 'http://diplom.kiuf.uz'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://3700-37-110-214-244.ngrok-free.app"
+]

@@ -1,5 +1,12 @@
 {% extends 'base.html' %} 
 {% load static %}
+{% block style %}
+  <style>
+    tbody{
+      font-size: 12px;
+    }
+  </style>
+{% endblock style %}
 {% block content %}
 <div class="container-fluid">
   <div class="row">
@@ -8,15 +15,12 @@
         src="{% static 'images/logo.jpg' %}"
         alt="logo"
         class="image-fluid mt-4 mb-4"
-        style="width: 10%; border-radius: 50%"
+        style="width: 20%; border-radius: 50%"
       />
     </div>
     <div class="col-12 text-center mt-5">
-      <h2 class="title mb-5">BITIRUVCHINING SHAXSIY MA'LUMOTLARI</h2>
-      <table
-        class="table table-striped table-bordered"
-        style="width: 70%; margin-left: 15%"
-      >
+      <h2 class="title fs-5 mb-3">BITIRUVCHINING SHAXSIY MA'LUMOTLARI</h2>
+      <table class="table table-striped table-bordered">
         <tbody>
           <tr>
             <th scope="row">Familiya:</th>
@@ -38,11 +42,8 @@
       </table>
     </div>
     <div class="col-12 text-center mt-4">
-      <h2 class="title mb-5">BITIRUVCHINING TA'LIM MA'LUMOTLARI</h2>
-      <table
-        class="table table-striped table-bordered"
-        style="width: 70%; margin-left: 15%"
-      >
+      <h2 class="title fs-5 mb-4">BITIRUVCHINING TA'LIM MA'LUMOTLARI</h2>
+      <table class="table table-striped table-bordered">
         <tbody>
           <tr>
             <th scope="row">OTM:</th>
