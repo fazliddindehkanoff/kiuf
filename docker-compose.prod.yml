@@ -22,7 +22,7 @@ services:
   db:
     image: postgres:14.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - diplom_postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=${DB_TITLE}
       - POSTGRES_USER=${DB_USER}
@@ -32,6 +32,6 @@ services:
         max-size: 10m
 
 volumes:
-  postgres_data:
+  diplom_postgres_data:
   static_volume:
   media_volume:
